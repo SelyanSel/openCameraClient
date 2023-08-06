@@ -26,13 +26,25 @@ function httpGet(theUrl)
 var connectingIndicator = document.getElementById('connectIndicator')
 var errIndicator = document.getElementById('errConnect')
 var notConnectIndicator = document.getElementById('notConnected')
+var connectIndicator = document.getElementById('connected')
 
 setElementVisibility(errIndicator, false)
+setElementVisibility(connectIndicator, false)
 setElementVisibility(connectingIndicator, false)
 
 async function promptConnect(){
-    let response = httpGet('http://192.168.1.62:3000/ping')
+    setElementVisibility(connectingIndicator, true)
+    setElementVisibility(notConnectIndicator, false)
+    setElementVisibility(connectIndicator, false)
+    setElementVisibility(errIndicatorIndicator, false)
+    let response = await httpGet('http://192.168.1.62:3000/ping')
     if (response == "pong"){
-        alert('hi')
+        setElementVisibility(connectingIndicator, true)
+        setElementVisibility(notConnectIndicator, false)
+        setElementVisibility(errIndicatorIndicator, false)
+        connectIndicator.textContent = "connected to 192.168.1.62"
+        setElementVisibility(connectIndicator, true)
+    }else{
+
     }
 }
