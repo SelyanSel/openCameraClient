@@ -48,6 +48,31 @@ var isConnected = false
 var serverpassword
 var serveraddress
 
+// load items from localStorage
+
+serveraddress = localStorage.getItem('address')
+serverpassword = localStorage.getItem('password')
+
+// authenticate user (funcion)
+
+async function authUser(){
+    try {
+        let result = await httpGet('http://' + serveraddress + ':3000/validateUser?password=' + serverpassword)
+
+        if (result !== "valid_user"){
+            window.location = "./index.html"
+            localStorage.clear()
+        }
+    } catch (error) {
+        window.location = "./index.html"
+        localStorage.clear()
+    }
+}
+
+// authenticate user
+
+authUser()
+
 setPanelVisibility(false)
 
 setElementVisibility(errIndicator, false)
@@ -91,11 +116,6 @@ async function promptConnect(){
             setPanelVisibility(true)
             setElementVisibility(connect,false)
             isConnected = true
-
-            // store informations to localStorage
-            localStorage.setItem('address', serveraddress)
-            localStorage.setItem('password', serverpassword)
-
         }else{
             setElementVisibility(connectingIndicator, false)
             setElementVisibility(notConnectIndicator, false)
